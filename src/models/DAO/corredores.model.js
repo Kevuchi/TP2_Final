@@ -1,10 +1,15 @@
+import funcionAlerta from "../../utils/calcDistancia.js"
 class Corredor {
     constructor() {
-        const corredores = [];
+        this.corredores = [
+            { id: "COR234", latitud: -44.6037, longitud: -68.3816 },
+            { id: "COR567", latitud: -99.6037, longitud: -20.3816 }
+        ];
     }
 
     getCorredores = async () => {
-        return await this.corredores;
+        const todosCorredores = await this.corredores;
+        return todosCorredores;
     };
 
     getCorredorById = async (id) => {
@@ -24,13 +29,14 @@ class Corredor {
             || corredor.id.length > 6
             || corredor.id.length < 6) throw new Error("Corredor inválido")
         const findCorredor = this.getCorredorById(corredor.id);
-        if (findCorredor != null) { this.corredores.push(corredor) }
+        if (findCorredor != null || findCorredor != undefined) { this.corredores.push(corredor) }
         else {
             this.corredores.filter(corr => corr.id != corredor.id)
             this.corredores.push(corredor)
         }
+        let alerta = this.corredores.filter(c => funcionAlerta(corredor.latitud, corredor.longitud, c.latitud, c.longitud) < 50)
 
-        return { _id: result.insertedId, ...usuario };
+        return alerta;
     };
 }
 

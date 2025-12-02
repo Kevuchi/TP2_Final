@@ -6,6 +6,7 @@ class CorredoresController {
     }
 
     getCorredores = async (req, res) => {
+        console.log("holas bebe")
         const all = await this.corredores.getCorredores();
         res.send(all);
     };
